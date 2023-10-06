@@ -1,12 +1,12 @@
 import React from 'react';
-import {Image, TouchableOpacity} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import { Image, TouchableOpacity } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 //Screens
-import {Onboarding, DestinationDetail} from './screens';
+import { Welcome, DestinationDetail } from './screens';
 //tabs
 import Tabs from './navigation/tabs';
-import {SIZES, COLORS, icons} from './constants';
+import { SIZES, COLORS, icons } from './constants';
 
 const theme = {
   ...DefaultTheme,
@@ -21,31 +21,16 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator initialRouteName={'Onboarding'}>
+      <Stack.Navigator initialRouteName={'Welcome'}>
         <Stack.Screen
-          name="Onboarding"
-          component={Onboarding}
-          options={{
-            title: '',
-            headerStyle: null,
-            headerLeft: () => <></>,
-            headerRight: () => (
-              <TouchableOpacity
-                style={{marginRight: SIZES.padding}}
-                onPress={() => console.log('Pressed')}>
-                <Image
-                  source={icons.barMenu}
-                  resizeMode="contain"
-                  style={{width: 25, height: 25}}
-                />
-              </TouchableOpacity>
-            ),
-          }}
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-        name="DestinationDetail"
-        component={DestinationDetail}
-        options={{ headerShown:false }}
+        <Stack.Screen
+          name="DestinationDetail"
+          component={DestinationDetail}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Home"
@@ -55,25 +40,25 @@ const App = () => {
             headerStyle: {
               backgroundColor: COLORS.white,
             },
-            headerLeft: ({onPress}) => (
+            headerLeft: ({ onPress }) => (
               <TouchableOpacity
-                style={{marginLeft: SIZES.padding}}
+                style={{ marginLeft: SIZES.padding }}
                 onPress={onPress}>
                 <Image
                   source={icons.back}
                   resizeMode="contain"
-                  style={{width: 25, height: 25}}
+                  style={{ width: 25, height: 25 }}
                 />
               </TouchableOpacity>
             ),
             headerRight: () => (
               <TouchableOpacity
-                style={{marginRight: SIZES.padding}}
+                style={{ marginRight: SIZES.padding }}
                 onPress={() => console.log('Menu')}>
                 <Image
                   source={icons.menu}
                   resizeMode="contain"
-                  style={{width: 25, height: 25}}
+                  style={{ width: 25, height: 25 }}
                 />
               </TouchableOpacity>
             ),
