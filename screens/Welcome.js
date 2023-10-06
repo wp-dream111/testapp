@@ -7,10 +7,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import { COLORS, SIZES, images, FONTS } from '../constants';
 
-const OnBoarding = ({ navigation }) => {
+const Welcome = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -24,7 +23,7 @@ const OnBoarding = ({ navigation }) => {
               style={{
                 color: COLORS.white,
                 marginTop: SIZES.base,
-                ...FONTS.body3,
+                ...FONTS.body2,
               }}>
               Luxury experiences,
             </Text>
@@ -32,53 +31,64 @@ const OnBoarding = ({ navigation }) => {
               style={{
                 color: COLORS.white,
                 marginTop: SIZES.base,
-                ...FONTS.body3,
+                ...FONTS.body2,
               }}>
               accessible.
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Home')}
-            style={[
-              styles.shadow,
-              {
-                marginTop: SIZES.padding * 2,
-                width: '100%',
-                height: 50,
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 16,
-              },
-            ]}>
-            <LinearGradient
-              style={{
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 15,
-              }}
-              colors={['#ffffff', '#ffffff']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}>
-              <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Login</Text>
-            </LinearGradient>
-            <LinearGradient
-              style={{
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 15,
-                borderColor: '#ffffff',
-                borderWidth: 1,
-              }}
-              colors={['transparent', 'transparent']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}>
-              <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Up</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+          <View style={{ gap: 16, paddingTop: 25 }}>
+            <TouchableOpacity
+              onPress={() => { }}
+              style={[
+                styles.shadow,
+                {
+                  width: '100%',
+                  height: 43,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 16,
+                },
+              ]}>
+              <View
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 15,
+                  backgroundColor: COLORS.white,
+                }}
+              >
+                <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Login</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SignUp')}
+              style={[
+                styles.shadow,
+                {
+                  width: '100%',
+                  height: 43,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 16,
+                },
+              ]}>
+              <View
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 15,
+                  borderColor: '#ffffff',
+                  borderWidth: 1,
+                }}
+              >
+                <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Up</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -101,4 +111,4 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
-export default OnBoarding;
+export default Welcome;

@@ -4,222 +4,133 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
+  ImageBackground,
+  SafeAreaView,
+  Animated,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS, images, SIZES, icons, FONTS} from '../constants';
+import { COLORS, images, SIZES, icons, FONTS } from '../constants';
 
-const OptionItem = ({icon, bgColor, label, onPress}) => {
+const AnimatedButton = ({ onPress, text, translateY }) => {
   return (
-    <TouchableOpacity
-      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-      onPress={onPress}>
-      <View style={[styles.shadow, {width: 60, height: 60}]}>
-        <LinearGradient
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 15,
-          }}
-          colors={bgColor}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 1}}>
-          <Image
-            source={icon}
-            resizeMode="cover"
-            style={{
-              tintColor: COLORS.white,
-              width: 30,
-              height: 30,
-            }}
-          />
-        </LinearGradient>
-      </View>
-      <Text style={{marginTop: SIZES.base, color: COLORS.gray, ...FONTS.body3}}>
-        {label}
-      </Text>
-    </TouchableOpacity>
+    <Animated.View style={[styles.animatedButton, { transform: [{ translateY }] }]}>
+      <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
+        <Text style={[styles.buttonText, { ...FONTS.h3 }]}>{text}</Text>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
-const Home = ({navigation}) => {
-  //dummy data
-  const [destinations,setDestinations] = React.useState([
-    {
-      id:0,
-      name:"Ski Villa",
-      img:images.skiVilla
-    },
-    {
-      id:1,
-      name:"Climbing Hills",
-      img:images.climbingHills
-    },
-    {
-      id:2,
-      name:"Frozen Hills",
-      img:images.frozenHills
-    },
-    {
-      id:3,
-      name:"Beach",
-      img:images.beach
-    },
-  ])
 
-  //Render 
-  function renderDestinations (item,index){
-    var destinationsStyle = {};
-    if (index == 0 ){
-      destinationsStyle = {marginLeft:SIZES.padding}
+const Home = ({ navigation }) => {
+  const [animation] = useState(new Animated.Value(0));
+  const [showButtons, setShowButtons] = useState(false);
+
+  const handleButtonPress = () => {
+    if (showButtons) {
+      Animated.timing(animation, {
+        toValue: 50,
+        duration: 300,
+        useNativeDriver: false,
+      }).start(() => {
+        setShowButtons(false);
+      });
+    } else {
+      setShowButtons(true);
+      Animated.timing(animation, {
+        toValue: -10,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
     }
-    return(
-      <TouchableOpacity style={{ justifyContent:'center',marginHorizontal:SIZES.base,...destinationsStyle }}
-      onPress={()=>{navigation.navigate("DestinationDetail")}}
-      >
-<Image 
-source={item.img}
-resizeMode='cover'
-style={{ 
-  width:SIZES.width * 0.28,
-  height:'82%',
-  borderRadius:15,
- }}
-/>
-<Text style={{ marginTop:SIZES.base/2,...FONTS.h4 }}>{item.name}</Text>
-      </TouchableOpacity>
-    )
-  }
+  };
   return (
-    <View style={styles.container}>
-      {/* Banner */}
-      <View
-        style={{
-          flex: 1,
-          marginTop: SIZES.base,
-          paddingHorizontal: SIZES.padding,
-        }}>
-        <Image
-          source={images.homeBanner}
-          resizeMode="cover"
-          style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: 15,
-          }}
-        />
-      </View>
-      {/* Options */}
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: SIZES.padding,
-            paddingHorizontal: SIZES.base,
-          }}>
-          <OptionItem
-            icon={icons.airplane}
-            bgColor={['#46aeff', '#5884ff']}
-            label="Flight"
-            onPress={() => {
-              console.log('Flight');
-            }}
-          />
-          <OptionItem
-            icon={icons.train}
-            bgColor={['#fddf90', '#fcda13']}
-            label="Train"
-            onPress={() => {
-              console.log('Train');
-            }}
-          />
-          <OptionItem
-            icon={icons.bus}
-            bgColor={['#e973ad', '#da5df2']}
-            label="Bus"
-            onPress={() => {
-              console.log('Bus');
-            }}
-          />
-          <OptionItem
-            icon={icons.taxi}
-            bgColor={['#fcaba8', '#fe6bba']}
-            label="Taxi"
-            onPress={() => {
-              console.log('Taxi');
-            }}
-          />
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        source={images.homeround}
+        style={{ flex: 1, resizeMode: 'cover', height: '100%' }}
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
+          {showButtons && (
+            <>
+              <AnimatedButton
+                onPress={() => { }}
+                text="View Flights"
+                translateY={animation}
+              />
+              <AnimatedButton
+                onPress={() => { }}
+                text="View Hotels"
+                translateY={animation}
+              />
+            </>
+          )}
+          <TouchableOpacity
+            onPress={handleButtonPress}
+            style={[
+              {
+                width: '100%',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 16,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: COLORS.white,
+              },
+            ]}>
+            <LinearGradient
+              style={{
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 10,
+              }}
+              colors={showButtons ? ['transparent', 'transparent'] : ['#ffffff', '#ffffff']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: showButtons ? COLORS.white : COLORS.black, ...FONTS.h3 }}>Book an Experience </Text>
+                <Image
+                  source={icons.arrow}
+                  resizeMode="contain"
+                  style={{ position: 'absolute', marginLeft: '50%', transform: showButtons ? [{ scaleY: -1 }] : [{ scaleY: 1 }], tintColor: showButtons ? COLORS.white : COLORS.black }} />
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: SIZES.radius,
-            paddingHorizontal: SIZES.base,
-          }}>
-          <OptionItem
-            icon={icons.bed}
-            bgColor={['#ffc465', '#ff9c5f']}
-            label="Hotel"
-            onPress={() => {
-              console.log('Hotal');
-            }}
-          />
-          <OptionItem
-            icon={icons.eat}
-            bgColor={['#7cf1fb', '#4ebefd']}
-            label="Eats"
-            onPress={() => {
-              console.log('Eats');
-            }}
-          />
-          <OptionItem
-            icon={icons.compass}
-            bgColor={['#7be993', '#46caaf']}
-            label="Adventure"
-            onPress={() => {
-              console.log('Adventure');
-            }}
-          />
-          <OptionItem
-            icon={icons.event}
-            bgColor={['#fca397', '#fc7b6c']}
-            label="Event"
-            onPress={() => {
-              console.log('Event');
-            }}
-          />
-        </View>
-      </View>
-      {/* Destination */}
-      <View style={{flex: 1}}>
-        <Text style={{ marginTop:SIZES.base,marginHorizontal:SIZES.padding,...FONTS.h2 }}>Destination</Text>
-        <FlatList 
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={destinations}
-        keyExtractor={item=> item.id.toString()}
-        renderItem={({item,index}) => renderDestinations(item,index)}
-        />
-      </View>
-    </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.black,
+    zIndex: 1,
   },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  buttonContainer: {
+    color: 'black',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderRadius: SIZES.radius,
+    paddingVertical: 10,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    width: '100%',
   },
+  buttonText: {
+    color: 'black',
+    fontSize: SIZES.body3,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  animatedButton: {
+    alignItems: 'center',
+  }
 });
 export default Home;

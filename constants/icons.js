@@ -19,12 +19,24 @@ export const train = require('../assets/icons/train_icon.png');
 export const user = require('../assets/icons/user_icon.png');
 export const villa = require('../assets/icons/villa_icon.png');
 export const wind = require('../assets/icons/wind_icon.png');
+export const tunnel = require('../assets/icons/tunnel_icon.png');
+export const hotel = require('../assets/icons/hotel_icon.png');
+export const flight = require('../assets/icons/flight_icon.png');
+export const account = require('../assets/icons/account_icon.png');
+export const arrow = require('../assets/icons/arrow_icon.png');
+export const cancel = require('../assets/icons/highlight_off.png');
 
 export default {
   airplane,
+  tunnel,
+  arrow, 
+  hotel,
+  flight,
+  account,
   back,
   barMenu,
   bed,
+  cancel,
   bookmark,
   bus,
   compass,
