@@ -1,12 +1,4 @@
-import {
-  Image,
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import { Image, View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { COLORS, SIZES, FONTS, icons } from '../../constants';
 
@@ -109,9 +101,9 @@ const EmailPassword = ({ navigation }) => {
               value={email}
               onChangeText={handleEmailChange}
             />
-            <View style={{ padding: 13, display: isValidEmail ? 'none' : 'flex' }}>
+            {isValidEmail ? null : <View style={{ padding: 13 }}>
               <Text style={styles.invalidText}>Invalid</Text>
-            </View>
+            </View>}
           </View>
           <TextInput
             secureTextEntry={true}
@@ -194,7 +186,7 @@ const EmailPassword = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.darkGray,
   },
   shadow: {
     shadowColor: '#000',

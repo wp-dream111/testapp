@@ -1,6 +1,7 @@
 import Welcome from './Welcome';
 import Home from './Home';
 import SignUp from './SignUp';
-import DestinationDetail from './DestinationDetail';
+import Login from './Login';
+import Flights from './Flights';
 
-export { Welcome, Home, DestinationDetail, SignUp };
+export { Welcome, Home, SignUp, Login, Flights };

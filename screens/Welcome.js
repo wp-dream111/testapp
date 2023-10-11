@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ImageBackground } from 'react-native';
 import React from 'react';
 import { COLORS, SIZES, images, FONTS } from '../constants';
 
@@ -13,10 +6,10 @@ const Welcome = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={images.onBoardingImage}
-        style={{ flex: 1, resizeMode: 'cover' }}
+        source={images.homeround}
+        style={{ flex: 1, height: '110%' }}
       >
-        <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
+        <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 60, paddingLeft: 22, paddingRight: 22 }}>
           <View>
             <Text style={{ ...FONTS.body1, color: COLORS.white }}>Welcome to Tunnel.</Text>
             <Text
@@ -38,7 +31,7 @@ const Welcome = ({ navigation }) => {
           </View>
           <View style={{ gap: 16, paddingTop: 25 }}>
             <TouchableOpacity
-              onPress={() => { }}
+              onPress={() => navigation.navigate('Login')}
               style={[
                 styles.shadow,
                 {
@@ -98,10 +91,10 @@ const Welcome = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.darkGray,
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,

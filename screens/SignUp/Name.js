@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { COLORS, FONTS } from '../../constants';
 
@@ -91,7 +84,7 @@ const Name = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.darkGray,
   },
   shadow: {
     shadowColor: '#000',

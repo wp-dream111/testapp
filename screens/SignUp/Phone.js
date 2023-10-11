@@ -1,22 +1,17 @@
-import {
-  TextInput,
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import { TextInput, View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import PhoneInput from 'react-native-phone-input';
 import { COLORS, SIZES, FONTS } from '../../constants';
+import Loading from './Loading';
 
-const Phone = ({ navigation }) => {
+const Phone = ({ navigation, login }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('us');
   const [code, setCode] = useState('');
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [showValidationCode, setShowValidateionCode] = useState(false);
   const [isValidatedCode, setIsValidatedCode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isPhoneNumberValidation = (value) => {
     const phoneRegex = /^\+\d{1}\s?\d{10}$/;
@@ -34,7 +29,23 @@ const Phone = ({ navigation }) => {
     if (isPhoneNumberValidation(phoneNumber)) {
       if (showValidationCode) {
         if (validateCode(code)) {
-          navigation.navigate('CreateLoading');
+          if (login) {
+            setIsLoading(true);
+            setTimeout(() => {
+              navigation.navigate('HomeScreen');
+            }, 2000);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 2500);
+          } else {
+            setIsLoading(true);
+            setTimeout(() => {
+              navigation.navigate('HomeScreen');
+            }, 2000);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 2500);
+          }
         }
       } else {
         setShowValidateionCode(true);
@@ -71,68 +82,70 @@ const Phone = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, paddingTop: 100, paddingBottom: 60, paddingLeft: 36, paddingRight: 36 }}>
-        <View>
-          <Text style={{ ...FONTS.body3, color: COLORS.lighterGray }}>Welcome to Tunnel.</Text>
-          <Text style={{ ...FONTS.body3, color: COLORS.white }}>
-            {showValidationCode ? "Enter the verification code you receive." : "Enter your number. We'll never spam."}
-          </Text>
-        </View>
-        <View style={{ paddingTop: 32, gap: 16 }}>
-          <PhoneInput
-            style={[styles.phoneInput, { borderColor: isValidPhone ? COLORS.white : COLORS.gray }]}
-            textStyle={styles.phoneInputText}
-            onChangePhoneNumber={handlePhoneNumberChange}
-            onPressFlag={() => { }}
-            initialCountry={'us'}
-            textProps={{
-              placeholder: '1234567890',
-              placeholderTextColor: COLORS.lightGray
-            }}
-            onChangeCountryCode={handleCountryCodeChange}
-          />
-          {showValidationCode ? (
-            <TextInput
-              keyboardType='numeric'
-              placeholderTextColor={COLORS.lightGray}
-              style={[styles.input, { borderWidth: 1, borderColor: isValidatedCode ? COLORS.white : COLORS.gray }]}
-              value={code}
-              onChangeText={handleCodeChange}
-            />
-          ) : null}
-        </View>
-        <TouchableOpacity
-          onPress={goToNext}
-          disabled={(!showValidationCode && !isValidPhone) || (showValidationCode && !isValidatedCode)}
-          style={[
-            styles.shadow,
-            {
-              marginTop: 145,
-              width: '100%',
-              height: 43,
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
-          ]}>
-          <View
-            style={{
-              height: '100%',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 10,
-              backgroundColor: ((!showValidationCode && !isValidPhone) || (showValidationCode && !isValidatedCode)) ? COLORS.lightWhite : COLORS.white,
-            }}
-          >
-            <Text style={{ color: ((!showValidationCode && !isValidPhone) || (showValidationCode && !isValidatedCode)) ? COLORS.lightGray : COLORS.black, ...FONTS.body4 }}>{(showValidationCode && isValidatedCode) ? "Create Account" : "Continue"}</Text>
+      {isLoading ? <Loading title={login ? "Loading dashboard..." : "Creating your account..."} /> : (
+        <View style={{ flex: 1, paddingTop: 100, paddingBottom: 60, paddingLeft: 36, paddingRight: 36 }}>
+          <View>
+            <Text style={{ ...FONTS.body3, color: COLORS.lighterGray }}>Welcome to Tunnel.</Text>
+            <Text style={{ ...FONTS.body3, color: COLORS.white }}>
+              {showValidationCode ? "Enter the verification code you receive." : login ? "Login using your phone number." : "Enter your number. We'll never spam."}
+            </Text>
           </View>
-        </TouchableOpacity>
-        <View style={{ paddingTop: 8 }}>
-          <Text style={{ ...FONTS.body6, color: COLORS.white }}>
-            By clicking Create Account, you agree to our Terms and Private Policy and consent to receive text messages and notifications from us related to your flight. Message and data rates apply. Text STOP to cancel.
-          </Text>
+          <View style={{ paddingTop: 32, gap: 16 }}>
+            <PhoneInput
+              style={[styles.phoneInput, { borderColor: isValidPhone ? COLORS.white : COLORS.gray }]}
+              textStyle={styles.phoneInputText}
+              onChangePhoneNumber={handlePhoneNumberChange}
+              onPressFlag={() => { }}
+              initialCountry={'us'}
+              textProps={{
+                placeholder: '1234567890',
+                placeholderTextColor: COLORS.lightGray
+              }}
+              onChangeCountryCode={handleCountryCodeChange}
+            />
+            {showValidationCode ? (
+              <TextInput
+                keyboardType='numeric'
+                placeholderTextColor={COLORS.lightGray}
+                style={[styles.input, { borderWidth: 1, borderColor: isValidatedCode ? COLORS.white : COLORS.gray }]}
+                value={code}
+                onChangeText={handleCodeChange}
+              />
+            ) : null}
+          </View>
+          <TouchableOpacity
+            onPress={goToNext}
+            disabled={(!showValidationCode && !isValidPhone) || (showValidationCode && !isValidatedCode)}
+            style={[
+              styles.shadow,
+              {
+                marginTop: 145,
+                width: '100%',
+                height: 43,
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
+            ]}>
+            <View
+              style={{
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 10,
+                backgroundColor: ((!showValidationCode && !isValidPhone) || (showValidationCode && !isValidatedCode)) ? COLORS.lightWhite : COLORS.white,
+              }}
+            >
+              <Text style={{ color: ((!showValidationCode && !isValidPhone) || (showValidationCode && !isValidatedCode)) ? COLORS.lightGray : COLORS.black, ...FONTS.body4 }}>{login ? "Continue" : (showValidationCode && isValidatedCode) ? "Create Account" : "Continue"}</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={{ paddingTop: 8 }}>
+            <Text style={{ ...FONTS.body6, color: COLORS.white }}>
+              By clicking Create Account, you agree to our Terms and Private Policy and consent to receive text messages and notifications from us related to your flight. Message and data rates apply. Text STOP to cancel.
+            </Text>
+          </View>
         </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -140,7 +153,7 @@ const Phone = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.darkGray,
   },
   shadow: {
     shadowColor: '#000',

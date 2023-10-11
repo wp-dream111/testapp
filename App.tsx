@@ -1,10 +1,12 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 //Screens
-import { Welcome, DestinationDetail, SignUp } from './screens';
+import { Welcome, SignUp, Login } from './screens';
 //tabs
 import Tabs from './navigation/tabs';
+import { store } from './redux/store';
 
 const theme = {
   ...DefaultTheme,
@@ -31,12 +33,12 @@ const App = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="DestinationDetail"
-          component={DestinationDetail}
+          name="Login"
+          component={Login}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Home"
+          name="HomeScreen"
           component={Tabs}
           options={{ headerShown: false }}
         />
@@ -46,5 +48,9 @@ const App = () => {
 };
 
 export default () => {
-  return <App />;
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 };

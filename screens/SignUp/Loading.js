@@ -1,61 +1,58 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-} from 'react-native';
+import { View, Animated, Easing, StyleSheet, Text } from 'react-native';
 import React, { useEffect } from 'react';
-import { COLORS, SIZES, images, FONTS } from '../../constants';
+import { COLORS, FONTS, images } from '../../constants';
 
-const Loading = ({ navigation }) => {
+const Loading = ({ title }) => {
+  const spinValue = new Animated.Value(0);
+
+  const spin = () => {
+    spinValue.setValue(0);
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: 3000,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start(() => spin());
+  };
+
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('Home');
-    }, 5000);
+    spin();
   }, []);
 
+  const spinMethod = spinValue.interpolate({
+    inputRange: [0, 0.5],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ alignItems: 'center', justifyContent: 'center', height: '100%', gap: 36 }}>
-        <View style={{ alignItems: 'center' }}>
-          <Text
-            style={{
-              color: COLORS.white,
-              marginTop: SIZES.padding,
-              textAlign: 'center',
-              ...FONTS.body4,
-            }}
-          >
-            Creating your account...
-          </Text>
-        </View>
-        <Image
-          source={images.loading}
-          resizeMode="contain"
-          style={{
-            width: '40%',
-          }}
-        />
+    <View style={styles.container}>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={styles.text}>{title}</Text>
       </View>
-    </SafeAreaView>
+      <Animated.Image
+        source={images.loading}
+        style={{ ...styles.image, transform: [{ rotateY: spinMethod }] }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
+  image: {
+    width: 130,
+    height: 65,
+  },
+  text: {
+    color: COLORS.white,
+    marginBottom: 38,
+    textAlign: 'center',
+    ...FONTS.body4,
   },
 });
+
 export default Loading;

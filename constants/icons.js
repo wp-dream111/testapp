@@ -1,57 +1,41 @@
-export const airplane = require('../assets/icons/airplane_icon.png');
-export const back = require('../assets/icons/back_icon.png');
-export const barMenu = require('../assets/icons/bar_menu_icon.png');
-export const bed = require('../assets/icons/bed_icon.png');
-export const bookmark = require('../assets/icons/bookmark_icon.png');
-export const bus = require('../assets/icons/bus_icon.png');
-export const compass = require('../assets/icons/compass_icon.png');
-export const eat = require('../assets/icons/eat_icon.png');
 export const home = require('../assets/icons/home_icon.png');
-export const event = require('../assets/icons/event_icon.png');
-export const menu = require('../assets/icons/menu_icon.png');
-export const parking = require('../assets/icons/parking_icon.png');
 export const search = require('../assets/icons/search_icon.png');
-export const star_empty = require('../assets/icons/star_empty.png');
-export const star_full = require('../assets/icons/star_full.png');
-export const star_half = require('../assets/icons/star_half.png');
-export const taxi = require('../assets/icons/taxi_icon.png');
-export const train = require('../assets/icons/train_icon.png');
-export const user = require('../assets/icons/user_icon.png');
-export const villa = require('../assets/icons/villa_icon.png');
-export const wind = require('../assets/icons/wind_icon.png');
 export const tunnel = require('../assets/icons/tunnel_icon.png');
 export const hotel = require('../assets/icons/hotel_icon.png');
-export const flight = require('../assets/icons/flight_icon.png');
+export const flights = require('../assets/icons/flight_icon.png');
 export const account = require('../assets/icons/account_icon.png');
 export const arrow = require('../assets/icons/arrow_icon.png');
 export const cancel = require('../assets/icons/highlight_off.png');
+export const close = require('../assets/icons/close.png');
+export const arrow_down = require('../assets/icons/arrow_down.png');
+export const arrow_right = require('../assets/icons/rightarrow.png');
+export const departure_flight = require('../assets/icons/departure_flight.png');
+export const return_flight = require('../assets/icons/return_flight.png');
+export const sort_ascending = require('../assets/icons/sort-ascending.png');
+export const united_airline = require('../assets/icons/united_airline.png');
+export const iberia_airline = require('../assets/icons/iberia_airline.png');
+export const tap_airline = require('../assets/icons/tap_airline.png');
+export const orange_dot = require('../assets/icons/orange_dot.png');
+export const circle_done = require('../assets/icons/circle_done.png');
 
 export default {
-  airplane,
   tunnel,
-  arrow, 
+  arrow,
   hotel,
-  flight,
+  departure_flight,
+  return_flight,
   account,
-  back,
-  barMenu,
-  bed,
   cancel,
-  bookmark,
-  bus,
-  compass,
-  eat,
   home,
-  event,
-  menu,
-  parking,
   search,
-  star_empty,
-  star_full,
-  star_half,
-  taxi,
-  train,
-  user,
-  villa,
-  wind,
+  close,
+  arrow_down,
+  arrow_right,
+  flights,
+  sort_ascending,
+  united_airline,
+  iberia_airline,
+  tap_airline,
+  orange_dot,
+  circle_done,
 };
