@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS, icons } from '../constants';
 import { Home, Flights } from '../screens';
@@ -13,7 +13,7 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       tabBar={({ state, descriptors, navigation }) => bookingState.isDetail ? null : (
-        <View style={{ flexDirection: 'row', backgroundColor: COLORS.darkGray, justifyContent: 'space-around', alignItems: 'center', height: '12%' }}>
+        <View style={styles.tabBar}>
           {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];
             const isFocused = state.index === index;
@@ -56,14 +56,14 @@ const Tabs = () => {
           null
         ],
         tabBarLabel: ({ focused, children, color }) => (
-          <Text style={{ color: focused ? COLORS.white : color, fontSize: 10, textAlign: 'center', paddingTop: 4 }}>{children}</Text>
+          <Text style={{ ...styles.tabBarLabel, color: focused ? COLORS.white : color }}>{children}</Text>
         ),
         tabBarIcon: ({ focused, color }) => {
           const tintColor = focused ? COLORS.white : color;
           switch (route.name) {
             case 'Home':
               return (
-                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <View style={styles.iconWrap}>
                   <Image
                     source={icons.orange_dot}
                     resizeMode="contain"
@@ -78,7 +78,7 @@ const Tabs = () => {
               );
             case 'Hotels':
               return (
-                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <View style={styles.iconWrap}>
                   <Image
                     source={icons.orange_dot}
                     resizeMode="contain"
@@ -93,7 +93,7 @@ const Tabs = () => {
               );
             case 'Flights':
               return (
-                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <View style={styles.iconWrap}>
                   <Image
                     source={icons.orange_dot}
                     resizeMode="contain"
@@ -108,7 +108,7 @@ const Tabs = () => {
               );
             case 'Account':
               return (
-                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <View style={styles.iconWrap}>
                   <Image
                     source={icons.orange_dot}
                     resizeMode="contain"
@@ -131,5 +131,25 @@ const Tabs = () => {
     </Tab.Navigator >
   );
 };
+
+const styles = StyleSheet.create({
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.darkGray,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: 70,
+  },
+  tabBarLabel: {
+    fontSize: 10,
+    textAlign: 'center',
+    paddingTop: 4,
+  },
+  iconWrap: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 8,
+  }
+})
 
 export default Tabs;

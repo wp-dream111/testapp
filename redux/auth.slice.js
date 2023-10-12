@@ -4,12 +4,18 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const name = 'auth';
 const initialState = createInitialState();
-const reducers = createReducers();
 const extraActions = createExtraActions();
 const slice = createSlice({
   name,
   initialState,
-  reducers,
+  reducers: {
+    initializeState(state) {
+      state = initialState
+    },
+    setLoadingTitle(state, action) {
+      state.loadingTitle = action.payload
+    }
+  },
   extraReducers: builder => {
     builder
       .addCase('action', (state, action) => {
@@ -27,11 +33,12 @@ export const authReducer = slice.reducer;
 // implementation
 
 function createInitialState() {
-  return {}
-}
-
-function createReducers() {
-  return {};
+  return {
+    loadingTitle: '',
+    firstName: '',
+    lastName: '',
+    phonenumber: '',
+  }
 }
 
 function createExtraActions() {

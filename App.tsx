@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 //Screens
-import { Welcome, SignUp, Login } from './screens';
+import { Welcome, SignUp, Login, Loading } from './screens';
 //tabs
 import Tabs from './navigation/tabs';
 import { store } from './redux/store';
@@ -40,6 +40,11 @@ const App = () => {
         <Stack.Screen
           name="HomeScreen"
           component={Tabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

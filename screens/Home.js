@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, SafeAreaView, Animated } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, Animated } from 'react-native';
 import React, { useState } from 'react';
 import { COLORS, images, SIZES, icons, FONTS } from '../constants';
 
@@ -34,14 +34,15 @@ const Home = ({ navigation }) => {
       }).start();
     }
   };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={images.homeround} style={{ position: 'absolute', zIndex: -1, resizeMode: 'stretch', width: '100%', height: '100%' }} />
+      <Image source={images.homeround} style={styles.background} />
       <View style={styles.title}>
         <Text style={styles.text}>Good evening, Martin</Text>
-        <Text style={styles.text}>0 points</Text>
+        <Text style={styles.text}>0 <Text style={{ ...styles.text, color: COLORS.lightWhite }}>points</Text></Text>
       </View>
-      <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 25, paddingLeft: 23, paddingRight: 23 }}>
+      <View style={styles.animatedButtons}>
         {showButtons && (
           <>
             <AnimatedButton
@@ -56,38 +57,13 @@ const Home = ({ navigation }) => {
             />
           </>
         )}
-        <TouchableOpacity
-          onPress={handleButtonPress}
-          style={[
-            {
-              width: '100%',
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 16,
-              borderRadius: 10,
-              borderWidth: showButtons ? 1 : 0,
-              borderColor: COLORS.white,
-            },
-          ]}>
-          <View
-            style={{
-              height: '100%',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 10,
-              backgroundColor: showButtons ? 'transparent' : '#fff'
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ color: showButtons ? COLORS.white : COLORS.black, ...FONTS.body4, height: 37, verticalAlign: 'middle' }}>Book an Experience </Text>
-              <Image
-                source={icons.arrow}
-                resizeMode="contain"
-                style={{ position: 'absolute', marginLeft: '50%', transform: showButtons ? [{ scaleY: -1 }] : [{ scaleY: 1 }], tintColor: showButtons ? COLORS.white : COLORS.black }} />
-            </View>
-          </View>
+        <TouchableOpacity onPress={handleButtonPress} style={{ ...styles.buttonWrap, backgroundColor: showButtons ? 'transparent' : '#fff' }}>
+          <Text style={{ ...styles.buttonText, color: showButtons ? COLORS.white : COLORS.black }}>Book an Experience </Text>
+          <Image
+            source={icons.arrow}
+            resizeMode="contain"
+            style={{ ...styles.icon, transform: showButtons ? [{ scaleY: -1 }] : [{ scaleY: 1 }], tintColor: showButtons ? COLORS.white : COLORS.black }}
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -111,6 +87,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 20,
     width: '100%',
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 37,
   },
   title: {
     flexDirection: 'row',
@@ -126,11 +105,40 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   buttonText: {
-    color: 'black',
+    color: COLORS.black,
     fontSize: SIZES.body4,
+    verticalAlign: 'middle',
   },
   animatedButton: {
     alignItems: 'center',
+  },
+  background: {
+    position: 'absolute',
+    zIndex: -1,
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
+  },
+  animatedButtons: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: 25,
+    paddingLeft: 23,
+    paddingRight: 23,
+  },
+  buttonWrap: {
+    width: '100%',
+    height: 37,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.white,
+  },
+  icon: {
+    position: 'absolute',
+    right: 11,
   }
 });
 export default Home;

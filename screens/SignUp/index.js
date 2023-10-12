@@ -3,11 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import EmailPassword from './EmailPassword';
 import Name from './Name';
 import Phone from './Phone';
-import Loading from './Loading';
 
 const Tab = createBottomTabNavigator();
 
-const SignUp = ({ navigation }) => {
+const SignUp = () => {
   return (
     <Tab.Navigator
       tabBar={() => null}
@@ -19,7 +18,6 @@ const SignUp = ({ navigation }) => {
       <Tab.Screen name="EmailPassword" component={EmailPassword} />
       <Tab.Screen name="Name" component={Name} />
       <Tab.Screen name="Phone" component={Phone} />
-      <Tab.Screen name="CreateLoading" component={Loading} />
     </Tab.Navigator>
   );
 };

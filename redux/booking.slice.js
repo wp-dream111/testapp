@@ -10,7 +10,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     initializeState(state) {
-			state = initialState;
+			state = initialState
 		},
     setOrigin(state, action) {
       state.origin = action.payload

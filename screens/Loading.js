@@ -1,8 +1,10 @@
 import { View, Animated, Easing, StyleSheet, Text } from 'react-native';
 import React, { useEffect } from 'react';
-import { COLORS, FONTS, images } from '../../constants';
+import { useSelector } from 'react-redux';
+import { COLORS, FONTS, images } from '../constants';
 
-const Loading = ({ title }) => {
+const Loading = () => {
+  const authState = useSelector(state => state.auth);
   const spinValue = new Animated.Value(0);
 
   const spin = () => {
@@ -27,7 +29,7 @@ const Loading = ({ title }) => {
   return (
     <View style={styles.container}>
       <View style={{ alignItems: 'center' }}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={styles.text}>{authState.loadingTitle}</Text>
       </View>
       <Animated.Image
         source={images.loading}
@@ -40,6 +42,7 @@ const Loading = ({ title }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.darkGray,
     justifyContent: 'center',
     alignItems: 'center',
   },

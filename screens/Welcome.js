@@ -1,89 +1,32 @@
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ImageBackground } from 'react-native';
+import { Image, View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { COLORS, SIZES, images, FONTS } from '../constants';
 
 const Welcome = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground
-        source={images.homeround}
-        style={{ flex: 1, height: '110%' }}
-      >
-        <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 60, paddingLeft: 22, paddingRight: 22 }}>
-          <View>
-            <Text style={{ ...FONTS.body1, color: COLORS.white }}>Welcome to Tunnel.</Text>
-            <Text
-              style={{
-                color: COLORS.white,
-                marginTop: SIZES.base,
-                ...FONTS.body2,
-              }}>
-              Luxury experiences,
-            </Text>
-            <Text
-              style={{
-                color: COLORS.white,
-                marginTop: SIZES.base,
-                ...FONTS.body2,
-              }}>
-              accessible.
-            </Text>
-          </View>
-          <View style={{ gap: 16, paddingTop: 25 }}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Login')}
-              style={[
-                styles.shadow,
-                {
-                  width: '100%',
-                  height: 43,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 16,
-                },
-              ]}>
-              <View
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 15,
-                  backgroundColor: COLORS.white,
-                }}
-              >
-                <Text style={{ color: COLORS.black, ...FONTS.h3 }}>Login</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SignUp')}
-              style={[
-                styles.shadow,
-                {
-                  width: '100%',
-                  height: 43,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 16,
-                },
-              ]}>
-              <View
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 15,
-                  borderColor: '#ffffff',
-                  borderWidth: 1,
-                }}
-              >
-                <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Up</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+      <Image source={images.onBoardingImage} style={styles.background} />
+      <View style={styles.content}>
+        <View style={{ gap: SIZES.base }}>
+          <Text style={{ ...FONTS.body1, color: COLORS.white }}>Welcome to Tunnel.</Text>
+          <Text style={{ ...FONTS.body2, color: COLORS.white }}>Luxury experiences,</Text>
+          <Text style={{ ...FONTS.body2, color: COLORS.white }}>accessible.</Text>
         </View>
-      </ImageBackground>
+        <View style={{ gap: 16 }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Login')}
+            style={[styles.buttonWrap, { backgroundColor: COLORS.white }]}
+          >
+            <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SignUp')}
+            style={styles.buttonWrap}
+          >
+            <Text style={{ color: COLORS.white, ...FONTS.body3 }}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -92,6 +35,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.darkGray,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: 60,
+    paddingLeft: 22,
+    paddingRight: 22,
+    gap: 25,
   },
   shadow: {
     shadowColor: COLORS.black,
@@ -102,6 +53,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  background: {
+    position: 'absolute',
+    zIndex: -1,
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
+    opacity: 0.3,
+  },
+  buttonWrap: {
+    width: '100%',
+    height: 43,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderColor: '#ffffff',
+    borderWidth: 1,
   },
 });
 export default Welcome;

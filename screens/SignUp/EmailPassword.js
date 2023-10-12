@@ -1,11 +1,12 @@
-import { Image, View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Image, View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { COLORS, SIZES, FONTS, icons } from '../../constants';
 
 const EmailPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isEight, setIsEight] = useState(false);
   const [isCapital, setIsCapital] = useState(false);
@@ -16,6 +17,7 @@ const EmailPassword = ({ navigation }) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
     if (emailPattern.test(value)) {
       setIsValidEmail(true);
+      setIsError(false);
       return true;
     } else {
       setIsValidEmail(false);
@@ -63,10 +65,17 @@ const EmailPassword = ({ navigation }) => {
   }
 
   const isFormValidation = () => {
-    if (validateEmail(email) && validatePassword(password)) {
-      return true;
+    if (!validateEmail(email)) {
+      setIsError(true);
+      return false;
     }
-    return false;
+    setIsError(false);
+
+    if (!validatePassword(password)) {
+      return false;
+    }
+
+    return true;
   }
 
   const goToNext = () => {
@@ -76,6 +85,7 @@ const EmailPassword = ({ navigation }) => {
   }
 
   const handleEmailChange = (newEmail) => {
+    validateEmail(newEmail);
     setEmail(newEmail);
   }
 
@@ -85,14 +95,14 @@ const EmailPassword = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{ flex: 1, paddingTop: 100, paddingBottom: 60, paddingLeft: 36, paddingRight: 36 }}>
         <View>
           <Text style={{ ...FONTS.body3, color: COLORS.lighterGray }}>Welcome to Tunnel.</Text>
           <Text style={{ ...FONTS.body3, color: COLORS.white }}>Create your account.</Text>
         </View>
         <View style={{ paddingTop: 32, gap: 16 }}>
-          <View style={[styles.email, { borderColor: isValidEmail ? COLORS.gray : COLORS.red }]}>
+          <View style={[styles.email, { borderColor: isValidEmail ? COLORS.white : isError ? COLORS.red : COLORS.gray }]}>
             <TextInput
               keyboardType='email-address'
               placeholder='Email'
@@ -101,15 +111,17 @@ const EmailPassword = ({ navigation }) => {
               value={email}
               onChangeText={handleEmailChange}
             />
-            {isValidEmail ? null : <View style={{ padding: 13 }}>
-              <Text style={styles.invalidText}>Invalid</Text>
-            </View>}
+            {isError ? (
+              < View style={{ padding: 13 }}>
+                <Text style={styles.invalidText}>Invalid</Text>
+              </View>
+            ) : null}
           </View>
           <TextInput
             secureTextEntry={true}
             placeholder='Password'
             placeholderTextColor={COLORS.lightGray}
-            style={[styles.input, { borderWidth: 1, borderColor: isValidPassword ? COLORS.white : COLORS.lightGray }]}
+            style={[styles.input, { borderWidth: 1, borderColor: isValidPassword ? COLORS.white : COLORS.gray }]}
             value={password}
             onChangeText={handlePasswordChange}
           />
@@ -154,7 +166,7 @@ const EmailPassword = ({ navigation }) => {
         </View>
         <TouchableOpacity
           onPress={goToNext}
-          disabled={!email || !password}
+          disabled={!email || !password?.length > 7}
           style={[
             styles.shadow,
             {
@@ -172,14 +184,14 @@ const EmailPassword = ({ navigation }) => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 10,
-              backgroundColor: (email && password) ? COLORS.white : COLORS.lightWhite,
+              backgroundColor: (email && password?.length > 7) ? COLORS.white : COLORS.lightWhite,
             }}
           >
-            <Text style={{ color: (email && password) ? COLORS.black : COLORS.lightGray, ...FONTS.body4 }}>Continue</Text>
+            <Text style={{ color: (email && password?.length > 7) ? COLORS.black : COLORS.lightGray, ...FONTS.body4 }}>Continue</Text>
           </View>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ScrollView >
   );
 };
 
