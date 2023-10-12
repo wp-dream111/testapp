@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet, SafeAreaView, useWindowDimensions } from 'react-native';
 import React, { useState } from 'react';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { COLORS, SIZES } from '../../../constants';
+import { COLORS, FONTS, SIZES } from '../../../constants';
 import RoundTrip from './RoundTrip';
 import OneWay from './OneWay';
 
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   labelText: {
     width: (SIZES.width - 60) / 2,
     textTransform: 'capitalize',
-    fontSize: SIZES.body3,
+    ...FONTS.body3,
     fontWeight: '300',
     verticalAlign: 'middle',
     paddingTop: 25,

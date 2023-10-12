@@ -231,6 +231,7 @@ const RoundTrip = ({ navigation }) => {
               <DatePicker
                 modal
                 mode='date'
+                title="Select Depature Date"
                 open={departureOpen}
                 date={departureDate}
                 onConfirm={handleChangeDepartureDate}
@@ -248,6 +249,7 @@ const RoundTrip = ({ navigation }) => {
               <DatePicker
                 modal
                 mode='date'
+                title="Select Return Date"
                 open={returnOpen}
                 date={returnDate}
                 onConfirm={handleChangeReturnDate}

@@ -134,7 +134,7 @@ const RoundTrip = ({ navigation }) => {
           <View style={styles.firstPart}>
             <Text style={styles.detailText}>Details</Text>
             <View style={styles.details}>
-              <TouchableOpacity onPress={() => setOriginModalVisible(true)}>
+              <TouchableOpacity style={{ borderRadius: 10, height: 37, width: 50 }} onPress={() => setOriginModalVisible(true)}>
                 <Text style={[styles.detailButton, { width: 50 }]}>{origin}</Text>
               </TouchableOpacity>
               <Modal
@@ -174,7 +174,7 @@ const RoundTrip = ({ navigation }) => {
                 </View>
               </Modal>
               <Text style={{ color: COLORS.white, ...FONTS.body4 }}>to</Text>
-              <TouchableOpacity onPress={() => setDestinationModalVisible(true)}>
+              <TouchableOpacity style={{ borderRadius: 10, height: 37, width: 50 }} onPress={() => setDestinationModalVisible(true)}>
                 <Text style={[styles.detailButton, { width: 50 }]}>{destination}</Text>
               </TouchableOpacity>
               <Modal

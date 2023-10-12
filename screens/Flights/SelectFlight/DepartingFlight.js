@@ -1,4 +1,4 @@
-import { Animated, Image, PanResponder, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, PanResponder,ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { COLORS, FONTS, SIZES, images, icons } from '../../../constants';
 
@@ -37,7 +37,6 @@ const DepartingFlight = ({ flight, handleSelectDepartingFlight, handleCancel }) 
     },
     onPanResponderRelease: (evt, gestureState) => {
       if (gestureState.dy > 50) {
-        console.log('swiping')
         swipeDownComponent();
         setTimeout(() => {
           handleCancel();
@@ -70,7 +69,7 @@ const DepartingFlight = ({ flight, handleSelectDepartingFlight, handleCancel }) 
       <View style={styles.container} {...panResponder.panHandlers}>
         <Text style={styles.title}>Departing Flight Details</Text>
         <Animated.View style={{ transform: [{ translateY }] }}>
-          <View style={styles.card}>
+          <ScrollView style={styles.card}>
             <Image source={images[flight.logo]} />
             <View style={[styles.row, { paddingTop: 36 }]}>
               <View style={{ gap: 6 }}>
@@ -130,7 +129,7 @@ const DepartingFlight = ({ flight, handleSelectDepartingFlight, handleCancel }) 
             <TouchableOpacity style={styles.selectButton} onPress={() => handleSelectDepartingFlight(isSelectOption)}>
               <Text style={styles.buttonText}>Select Return Flight</Text>
             </TouchableOpacity>
-          </View>
+          </ScrollView>
         </Animated.View>
       </View>
     </Animated.View>
@@ -159,7 +158,7 @@ const styles = StyleSheet.create({
     paddingTop: 35,
     paddingLeft: 20,
     paddingRight: 20,
-    height: SIZES.height - 180,
+    height: SIZES.height - 185,
   },
   row: {
     flexDirection: 'row',
