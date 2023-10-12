@@ -1,5 +1,5 @@
 import { Image, ScrollView, StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SelectList } from 'react-native-dropdown-select-list'
 import DatePicker from 'react-native-date-picker'
@@ -37,6 +37,14 @@ const RoundTrip = ({ navigation }) => {
   const [numberOfLuggage, setNumberOfLuggage] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    setOrigin(bookingState.origin);
+  }, [bookingState.origin]);
+
+  useEffect(() => {
+    setDestination(bookingState.destination);
+  }, [bookingState.destination]);
 
   const handleOriginChange = (value) => {
     setOrigin(value);

@@ -1,5 +1,5 @@
 import { FlatList, TextInput, Image, Modal, TouchableHighlight, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from 'react-native-date-picker'
 import { COLORS, SIZES, FONTS, icons } from '../../../constants';
@@ -50,6 +50,14 @@ const RoundTrip = ({ navigation }) => {
   const [showOriginDropdown, setShowOriginDropdown] = useState(false);
   const [showDestinationDropdown, setShowDestinationDropdown] = useState(false);
   const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    setOrigin(bookingState.origin);
+  }, [bookingState.origin]);
+
+  useEffect(() => {
+    setDestination(bookingState.destination);
+  }, [bookingState.destination]);
 
   const toggleOriginDropdown = () => {
     setShowOriginDropdown(!showOriginDropdown);
@@ -108,7 +116,7 @@ const RoundTrip = ({ navigation }) => {
     setFlightType('departure');
     dispatch(bookingActions.setIsDetail(false));
   }
-  
+
   const handleCancel = () => {
     setIsSelectDepartingFlight(false);
     setIsSelectReturningFlight(false);
@@ -239,7 +247,9 @@ const RoundTrip = ({ navigation }) => {
                   }}
                   onCancel={() => {
                     setDepartureOpen(false);
-                    setDateModalVisible(false);
+                    setTimeout(() => {
+                      setReturnOpen(true);
+                    }, 500);
                   }}
                 />
                 <DatePicker
@@ -273,16 +283,16 @@ const RoundTrip = ({ navigation }) => {
           </View>
           <ScrollView horizontal style={styles.horizontalScroll} contentContainerStyle={styles.scrollContent}>
             <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('standard')}>
-              <Text style={[styles.tabText, { color: bookingType === 'standard' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'standard' ? COLORS.white : COLORS.gray }]}>Standard</Text>
+              <Text style={[styles.tabText, { color: bookingType === 'standard' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'standard' ? COLORS.white : 'transparent' }]}>Standard</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('business')}>
-              <Text style={[styles.tabText, { color: bookingType === 'business' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'business' ? COLORS.white : COLORS.gray }]}>Business</Text>
+              <Text style={[styles.tabText, { color: bookingType === 'business' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'business' ? COLORS.white : 'transparent' }]}>Business</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('first')}>
-              <Text style={[styles.tabText, { color: bookingType === 'first' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'first' ? COLORS.white : COLORS.gray }]}>First</Text>
+              <Text style={[styles.tabText, { color: bookingType === 'first' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'first' ? COLORS.white : 'transparent' }]}>First</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('premium')}>
-              <Text style={[styles.tabText, { color: bookingType === 'premium' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'premium' ? COLORS.white : COLORS.gray }]}>Premium</Text>
+              <Text style={[styles.tabText, { color: bookingType === 'premium' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'premium' ? COLORS.white : 'transparent' }]}>Premium</Text>
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.content}>
@@ -381,7 +391,7 @@ const styles = StyleSheet.create({
   option: {
     padding: 10,
     width: '100%',
-    marginTop: 108,
+    marginTop: 120,
     backgroundColor: COLORS.gray,
     borderRadius: 10,
     color: COLORS.white,
@@ -389,7 +399,7 @@ const styles = StyleSheet.create({
 
   dropdownOptions: {
     position: 'absolute',
-    top: 108,
+    top: 120,
     width: '100%',
     height: 200,
     marginLeft: 30,

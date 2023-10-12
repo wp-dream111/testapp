@@ -37,6 +37,7 @@ const DepartingFlight = ({ flight, handleSelectDepartingFlight, handleCancel }) 
     },
     onPanResponderRelease: (evt, gestureState) => {
       if (gestureState.dy > 50) {
+        console.log('swiping')
         swipeDownComponent();
         setTimeout(() => {
           handleCancel();
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     paddingTop: 35,
     paddingLeft: 20,
     paddingRight: 20,
-    height: SIZES.height - 160,
+    height: SIZES.height - 180,
   },
   row: {
     flexDirection: 'row',
