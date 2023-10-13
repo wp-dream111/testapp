@@ -1,4 +1,4 @@
-import { FlatList, TextInput, Image, Modal, TouchableHighlight, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Platform, TextInput, Image, Modal, TouchableHighlight, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from 'react-native-date-picker'
@@ -134,7 +134,7 @@ const RoundTrip = ({ navigation }) => {
           <View style={styles.firstPart}>
             <Text style={styles.detailText}>Details</Text>
             <View style={styles.details}>
-              <TouchableOpacity style={{ borderRadius: 10, height: 37, width: 50 }} onPress={() => setOriginModalVisible(true)}>
+              <TouchableOpacity style={styles.detailButtonWrap} onPress={() => setOriginModalVisible(true)}>
                 <Text style={[styles.detailButton, { width: 50 }]}>{origin}</Text>
               </TouchableOpacity>
               <Modal
@@ -174,7 +174,7 @@ const RoundTrip = ({ navigation }) => {
                 </View>
               </Modal>
               <Text style={{ color: COLORS.white, ...FONTS.body4 }}>to</Text>
-              <TouchableOpacity style={{ borderRadius: 10, height: 37, width: 50 }} onPress={() => setDestinationModalVisible(true)}>
+              <TouchableOpacity style={styles.detailButtonWrap} onPress={() => setDestinationModalVisible(true)}>
                 <Text style={[styles.detailButton, { width: 50 }]}>{destination}</Text>
               </TouchableOpacity>
               <Modal
@@ -213,7 +213,7 @@ const RoundTrip = ({ navigation }) => {
                   )}
                 </View>
               </Modal>
-              <TouchableOpacity style={{ flex: 1 }} onPress={() => setDateModalVisible(true)}>
+              <TouchableOpacity style={[styles.detailButtonWrap, { flex: 1 }]} onPress={() => setDateModalVisible(true)}>
                 <Text style={styles.detailButton}>
                   {`${departureDate.getMonth() + 1}/${departureDate.getDate()}/${departureDate.getFullYear() - 2000}`} - {`${returnDate.getMonth() + 1}/${returnDate.getDate()}/${returnDate.getFullYear() - 2000}`}
                 </Text>
@@ -282,17 +282,17 @@ const RoundTrip = ({ navigation }) => {
             </View>
           </View>
           <ScrollView horizontal style={styles.horizontalScroll} contentContainerStyle={styles.scrollContent}>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('standard')}>
-              <Text style={[styles.tabText, { color: bookingType === 'standard' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'standard' ? COLORS.white : 'transparent' }]}>Standard</Text>
+            <TouchableOpacity style={[styles.tabTextWrap, { borderBottomColor: bookingType === 'standard' ? COLORS.white : 'transparent' }]} activeOpacity={0.7} onPress={() => handleChangeType('standard')}>
+              <Text style={[styles.tabText, { color: bookingType === 'standard' ? COLORS.white : COLORS.lightGray }]}>Standard</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('business')}>
-              <Text style={[styles.tabText, { color: bookingType === 'business' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'business' ? COLORS.white : 'transparent' }]}>Business</Text>
+            <TouchableOpacity style={[styles.tabTextWrap, { borderBottomColor: bookingType === 'business' ? COLORS.white : 'transparent' }]} activeOpacity={0.7} onPress={() => handleChangeType('business')}>
+              <Text style={[styles.tabText, { color: bookingType === 'business' ? COLORS.white : COLORS.lightGray }]}>Business</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('first')}>
-              <Text style={[styles.tabText, { color: bookingType === 'first' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'first' ? COLORS.white : 'transparent' }]}>First</Text>
+            <TouchableOpacity style={[styles.tabTextWrap, { borderBottomColor: bookingType === 'first' ? COLORS.white : 'transparent' }]} activeOpacity={0.7} onPress={() => handleChangeType('first')}>
+              <Text style={[styles.tabText, { color: bookingType === 'first' ? COLORS.white : COLORS.lightGray }]}>First</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => handleChangeType('premium')}>
-              <Text style={[styles.tabText, { color: bookingType === 'premium' ? COLORS.white : COLORS.lightGray, borderBottomColor: bookingType === 'premium' ? COLORS.white : 'transparent' }]}>Premium</Text>
+            <TouchableOpacity style={[styles.tabTextWrap, { borderBottomColor: bookingType === 'premium' ? COLORS.white : 'transparent' }]} activeOpacity={0.7} onPress={() => handleChangeType('premium')}>
+              <Text style={[styles.tabText, { color: bookingType === 'premium' ? COLORS.white : COLORS.lightGray }]}>Premium</Text>
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.content}>
@@ -333,13 +333,18 @@ const styles = StyleSheet.create({
     ...FONTS.body4,
   },
   detailButton: {
-    height: 37,
     fontSize: 12,
     color: COLORS.white,
     backgroundColor: COLORS.gray,
-    verticalAlign: 'middle',
     textAlign: 'center',
+  },
+  detailButtonWrap: {
+    height: 37,
+    backgroundColor: COLORS.gray,
     borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   secondPart: {
     flexDirection: "row",
@@ -375,10 +380,14 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  tabText: {
+  tabTextWrap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: '100%',
     borderBottomWidth: 1,
-    verticalAlign: 'middle',
+  },
+  tabText: {
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -391,7 +400,7 @@ const styles = StyleSheet.create({
   option: {
     padding: 10,
     width: '100%',
-    marginTop: 120,
+    marginTop: Platform.OS === 'ios' ? 180 : 120,
     backgroundColor: COLORS.gray,
     borderRadius: 10,
     color: COLORS.white,
@@ -399,7 +408,7 @@ const styles = StyleSheet.create({
 
   dropdownOptions: {
     position: 'absolute',
-    top: 120,
+    top: Platform.OS === 'ios' ? 180 : 120,
     width: '100%',
     height: 200,
     marginLeft: 30,
