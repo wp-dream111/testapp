@@ -37,7 +37,7 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={images.homeround} style={styles.background} />
+      <Image source={images.onBoardingImage} style={styles.background} />
       <View style={styles.title}>
         <Text style={styles.text}>Good evening, Martin</Text>
         <Text style={styles.text}>0 <Text style={{ ...styles.text, color: COLORS.lightWhite }}>points</Text></Text>
@@ -116,8 +116,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: -1,
     resizeMode: 'stretch',
-    width: '100%',
-    height: '100%',
+    width: SIZES.width,
+    height: SIZES.height,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderColor: COLORS.gray,
+    borderWidth: 1,
+    opacity: 0.5,
+    bottom: 0,
   },
   animatedButtons: {
     flex: 1,

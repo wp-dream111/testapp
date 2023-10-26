@@ -48,13 +48,6 @@ const Tabs = () => {
       )}
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: [
-          {
-            height: '12%',
-            backgroundColor: COLORS.darkGray,
-          },
-          null
-        ],
         tabBarLabel: ({ focused, children, color }) => (
           <Text style={{ ...styles.tabBarLabel, color: focused ? COLORS.white : color }}>{children}</Text>
         ),
@@ -128,7 +121,7 @@ const Tabs = () => {
       <Tab.Screen name="Hotels" component={Home} />
       <Tab.Screen name="Flights" component={Flights} />
       <Tab.Screen name="Account" component={Home} />
-    </Tab.Navigator >
+    </Tab.Navigator>
   );
 };
 
@@ -138,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkGray,
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 70,
+    height: 108,
   },
   tabBarLabel: {
     fontSize: 10,
